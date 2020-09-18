@@ -8,6 +8,12 @@ public class CameraController : MonoBehaviour
     public float RotationSpeed = 1;
     public Transform Target, Player;
     float mouseX, mouseY;
+
+    public GameObject something;
+
+    public ThirdPersonCharacterController thirdPersonCharacterController;
+
+    bool lockedOnToEnemy;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,10 +38,18 @@ public class CameraController : MonoBehaviour
         mouseY -= Input.GetAxis("Mouse Y") * RotationSpeed;
         mouseY = Mathf.Clamp(mouseY, -35, 60);
 
-        transform.LookAt(Target);
+        transform.LookAt(cameraTarget());
 
         Target.rotation = Quaternion.Euler(mouseY, mouseX, 0);
         Player.rotation = Quaternion.Euler(0, mouseX, 0);
 
+    }
+
+    public Transform cameraTarget()
+    {
+        if (!thirdPersonCharacterController.lockedOnToEnemy)
+            return Target;
+        else
+            return thirdPersonCharacterController.FindClosestEnemy().transform;
     }
 }
