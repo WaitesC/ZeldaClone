@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Ground_Test
+  m_Name: Ground_Grass
   m_Shader: {fileID: -6465566751694194690, guid: ea152aea2817c76489c1cee84f82f3a7,
     type: 3}
   m_ShaderKeywords: HARD_SHADING_ON _GLOSSYREFLECTIONS_OFF
@@ -124,7 +124,7 @@ Material:
     - _Cull: 2
     - _Cutoff: 0.5
     - _DabsRotation: 15
-    - _DabsTiling: 30
+    - _DabsTiling: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EnvironmentReflections: 1
@@ -139,7 +139,7 @@ Material:
     - _Parallax: 0.02
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Smoothness: 0.5
+    - _Smoothness: 1
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -168,4 +168,4 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
     - _Specular: {r: 0.2075472, g: 0.2075472, b: 0.2075472, a: 0}
-    - _TextureTiling: {r: 1, g: 1, b: 0, a: 0}
+    - _TextureTiling: {r: 10, g: 10, b: 0, a: 0}
