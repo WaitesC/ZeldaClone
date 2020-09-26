@@ -10,6 +10,9 @@ public class EnemyTargeter : MonoBehaviour
     public float lockOnDistance = 5;
     public bool lockedOnToEnemy;
 
+    public GameObject Target;
+    public GameObject Player;
+
 
     void Start()
     {
@@ -18,31 +21,7 @@ public class EnemyTargeter : MonoBehaviour
 
     void Update()
     {
-        closestEnemy = FindClosestEnemy();
-        closestEnemyDistance = DistancePlayerEnemy();
-
-        if(DistancePlayerEnemy() < lockOnDistance)
-        {
-            if (Input.GetAxis("Lock On") != 0f)
-            {
-                FindClosestEnemy().gameObject.transform.localScale = new Vector3(1, 2, 1);
-                lockedOnToEnemy = true;
-            }
-
-            if (Input.GetAxis("Lock On") != 1f)
-            {
-                FindClosestEnemy().gameObject.transform.localScale = new Vector3(1, 1, 1);
-                lockedOnToEnemy = false;
-            }
-        }
-
-        if (DistancePlayerEnemy() > lockOnDistance)
-        {
-
-            FindClosestEnemy().gameObject.transform.localScale = new Vector3(1, 1, 1);
-            lockedOnToEnemy = false;
-            //
-        }
+        LockOnToEnemy();
     }
 
     //finds closest enemy
@@ -76,4 +55,55 @@ public class EnemyTargeter : MonoBehaviour
         return enemyDistance;
     }
 
+    //locks camera to follow enemy
+    void LockOnToEnemy()
+    {
+        closestEnemy = FindClosestEnemy();
+        closestEnemyDistance = DistancePlayerEnemy();
+
+        //if distance is low enough player will lock onto enemy
+        if (DistancePlayerEnemy() < lockOnDistance)
+        {
+            if (Input.GetAxis("Lock On") != 0f)
+            {
+                lockedOnToEnemy = true;
+                StartLockOnFunction();
+            }
+
+            if (Input.GetAxis("Lock On") != 1f)
+            {
+                lockedOnToEnemy = false;
+                EndLockOnFunction();
+            }
+        }
+
+        //if player moves too far away lock on will cancel
+        if (DistancePlayerEnemy() > lockOnDistance)
+        {
+            lockedOnToEnemy = false;
+            EndLockOnFunction();
+            
+        }
+
+        //moves camera target to enemy if locked on
+        if (lockedOnToEnemy)
+            Target.gameObject.transform.position = FindClosestEnemy().gameObject.transform.position;
+        else
+            Target.gameObject.transform.position = Player.gameObject.transform.position;
+
+    }
+
+    void StartLockOnFunction()
+    {
+        FindClosestEnemy().gameObject.transform.localScale = new Vector3(1, 2, 1);
+
+
+    }
+
+    void EndLockOnFunction()
+    {
+        FindClosestEnemy().gameObject.transform.localScale = new Vector3(1, 1, 1);
+
+
+    }
 }

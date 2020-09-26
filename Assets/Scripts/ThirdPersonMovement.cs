@@ -8,13 +8,13 @@ public class ThirdPersonMovement : MonoBehaviour
     public Transform cam;
 
     public float speed = 6f;
+
     float speedMultiplier = 1;
 
-
     public float smoothTurnTime = 0.1f;
+
     float smoothTurnVelocity;
 
-    // Update is called once per frame
     void Update()
     {
         Movement();
@@ -22,6 +22,7 @@ public class ThirdPersonMovement : MonoBehaviour
         SprintCheck();
     }
 
+    //handles character movement
     void Movement()
     {
         float hor = Input.GetAxisRaw("Horizontal");
@@ -32,18 +33,21 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             float targetAngle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref smoothTurnVelocity, smoothTurnTime);
+            //change the following thingy for rotating towards enemy
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
+            
 
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             controller.Move(moveDir.normalized * speed * Time.deltaTime * speedMultiplier);
         }
     }
 
+    //checks for sprint input
     void SprintCheck()
     {
         if (Input.GetAxis("Sprint") != 0f)
         {
-            speedMultiplier = 5;
+            speedMultiplier = 3;
         }
 
         if (Input.GetAxis("Sprint") != 1f)
