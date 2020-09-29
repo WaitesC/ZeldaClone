@@ -4,16 +4,35 @@ using UnityEngine;
 
 public class ThirdPersonMovement : MonoBehaviour
 {
+    //reference to char controller
     public CharacterController controller;
+    //reference to enemy targeter controller
+    public GameObject EnemyTargeter;
+    //ref to cameraq
     public Transform cam;
 
+    //speed stuff
     public float speed = 6f;
 
     float speedMultiplier = 1;
 
+    //turning stuff
     public float smoothTurnTime = 0.1f;
-
     float smoothTurnVelocity;
+
+    //gravity stuff
+    Vector3 velocity;
+    public float gravity = -9.81f;
+    bool isGrounded;
+    public float jumpHeight = 3f;
+
+    //ground check stuff
+    public Transform groundCheck;
+    public float groundDistance = 0.4f;
+    public LayerMask groundMask;
+
+    public Transform target;
+
 
     void Update()
     {
@@ -25,6 +44,14 @@ public class ThirdPersonMovement : MonoBehaviour
     //handles character movement
     void Movement()
     {
+        //sets to is grounded when touching anything with ground mask
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+
+        if(isGrounded && velocity.y<0)
+        {
+            velocity.y = -2f;
+        }
+
         float hor = Input.GetAxisRaw("Horizontal");
         float ver = Input.GetAxisRaw("Vertical");
         Vector3 dir = new Vector3(hor, 0f, ver).normalized;
@@ -33,13 +60,32 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             float targetAngle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref smoothTurnVelocity, smoothTurnTime);
-            //change the following thingy for rotating towards enemy
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
-            
+
+            //code for facing enemy, MIGHT NEED SOME EXTRA WORK
+            //right now only faces towards enemy but 
+            if (EnemyTargeter.GetComponent<EnemyTargeter>().lockedOnToEnemy == true)
+            {
+                Debug.Log("hi");
+                target = EnemyTargeter.GetComponent<EnemyTargeter>().Target.transform;
+
+                //var rot = transform.rotation;
+
+                //transform.rotation = rot * Quaternion.Euler(1, 0, 0);
+
+                transform.LookAt(target.transform);
+
+            }
+            else
+                transform.rotation = Quaternion.Euler(0f, angle, 0f);
+
 
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             controller.Move(moveDir.normalized * speed * Time.deltaTime * speedMultiplier);
         }
+
+        Jump();
+
+        Gravity();
     }
 
     //checks for sprint input
@@ -55,4 +101,21 @@ public class ThirdPersonMovement : MonoBehaviour
             speedMultiplier = 1;
         }
     }
+
+    void Gravity()
+    {
+        velocity.y += gravity * Time.deltaTime;
+
+        controller.Move(velocity * Time.deltaTime);
+    }
+
+    void Jump()
+    {
+        if(Input.GetAxis("Jump") !=0 && isGrounded)
+        {
+            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        }
+    }
+
+    
 }
