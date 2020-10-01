@@ -13,6 +13,8 @@ public class EnemyTargeter : MonoBehaviour
     public GameObject Target;
     public GameObject Player;
 
+    public GameObject lockOnIcon;
+
 
     void Start()
     {
@@ -95,15 +97,17 @@ public class EnemyTargeter : MonoBehaviour
 
     void StartLockOnFunction()
     {
-        FindClosestEnemy().gameObject.transform.localScale = new Vector3(1, 2, 1);
+        //FindClosestEnemy().gameObject.transform.localScale = new Vector3(1, 2, 1);
 
+        lockOnIcon.SetActive(true);
 
     }
 
     void EndLockOnFunction()
     {
-        FindClosestEnemy().gameObject.transform.localScale = new Vector3(1, 1, 1);
+        //FindClosestEnemy().gameObject.transform.localScale = new Vector3(1, 1, 1);
 
+        lockOnIcon.SetActive(false);
 
     }
 }

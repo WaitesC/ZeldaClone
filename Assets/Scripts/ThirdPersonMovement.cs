@@ -38,7 +38,6 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         Movement();
 
-        SprintCheck();
     }
 
     //handles character movement
@@ -59,20 +58,21 @@ public class ThirdPersonMovement : MonoBehaviour
         if (dir.magnitude >= 0.1f)
         {
             float targetAngle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+            float targetAngle2 = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg + target.position.y - transform.position.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref smoothTurnVelocity, smoothTurnTime);
+            float angle2 = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle2, ref smoothTurnVelocity, smoothTurnTime);
+
+            var step = speed * Time.deltaTime;
 
             //code for facing enemy, MIGHT NEED SOME EXTRA WORK
             //right now only faces towards enemy but 
             if (EnemyTargeter.GetComponent<EnemyTargeter>().lockedOnToEnemy == true)
             {
-                Debug.Log("hi");
-                target = EnemyTargeter.GetComponent<EnemyTargeter>().Target.transform;
 
-                //var rot = transform.rotation;
-
-                //transform.rotation = rot * Quaternion.Euler(1, 0, 0);
 
                 transform.LookAt(target.transform);
+
+                //transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
             }
             else
@@ -83,6 +83,8 @@ public class ThirdPersonMovement : MonoBehaviour
             controller.Move(moveDir.normalized * speed * Time.deltaTime * speedMultiplier);
         }
 
+        SprintCheck();
+
         Jump();
 
         Gravity();
@@ -91,7 +93,7 @@ public class ThirdPersonMovement : MonoBehaviour
     //checks for sprint input
     void SprintCheck()
     {
-        if (Input.GetAxis("Sprint") != 0f)
+        if (Input.GetAxis("Sprint") != 0f && isGrounded)
         {
             speedMultiplier = 3;
         }
