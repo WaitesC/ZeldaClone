@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class EnemyTargeter : MonoBehaviour
 {
-    public GameObject closestEnemy;
-    public float closestEnemyDistance;
+    GameObject closestEnemy;
+    float closestEnemyDistance;
 
     public float lockOnDistance = 5;
     public bool lockedOnToEnemy;
@@ -14,7 +14,12 @@ public class EnemyTargeter : MonoBehaviour
     public GameObject Player;
 
     public GameObject lockOnIcon;
+    public GameObject enemyHealthBarIcon;
 
+    public EnemyHealthBar enemyHealthBar;
+
+    //enemy stats
+    float enemyMaxHealth;
 
     void Start()
     {
@@ -24,6 +29,8 @@ public class EnemyTargeter : MonoBehaviour
     void Update()
     {
         LockOnToEnemy();
+
+        //Debug.Log(EnemyCurrentHealth());
     }
 
     //finds closest enemy
@@ -55,6 +62,24 @@ public class EnemyTargeter : MonoBehaviour
 
 
         return enemyDistance;
+    }
+
+    //find current enemy health
+    public float EnemyCurrentHealth()
+    {
+        float enemyCurrentHealth = FindClosestEnemy().GetComponent<UnitStats>().currentHealth;
+
+        return enemyCurrentHealth;
+
+    }
+    
+    //find enemy max health
+    public float EnemyMaxHealth()
+    {
+        float enemyMaxHealth = FindClosestEnemy().GetComponent<UnitStats>().maxHealth;
+
+        return enemyMaxHealth;
+
     }
 
     //locks camera to follow enemy
@@ -100,6 +125,10 @@ public class EnemyTargeter : MonoBehaviour
         //FindClosestEnemy().gameObject.transform.localScale = new Vector3(1, 2, 1);
 
         lockOnIcon.SetActive(true);
+        enemyHealthBarIcon.SetActive(true);
+
+
+        SetEnemyHealthBar();
 
     }
 
@@ -108,6 +137,13 @@ public class EnemyTargeter : MonoBehaviour
         //FindClosestEnemy().gameObject.transform.localScale = new Vector3(1, 1, 1);
 
         lockOnIcon.SetActive(false);
+        enemyHealthBarIcon.SetActive(false);
 
+    }
+
+    void SetEnemyHealthBar()
+    {
+        enemyHealthBar.SetCurrentHealth(EnemyCurrentHealth());
+        enemyHealthBar.SetMaxHealth(EnemyMaxHealth());
     }
 }

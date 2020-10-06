@@ -10,6 +10,9 @@ public class ThirdPersonMovement : MonoBehaviour
     public GameObject EnemyTargeter;
     //ref to cameraq
     public Transform cam;
+    //ref to camera target
+    public Transform target;
+
 
     //speed stuff
     public float speed = 6f;
@@ -28,10 +31,9 @@ public class ThirdPersonMovement : MonoBehaviour
 
     //ground check stuff
     public Transform groundCheck;
-    public float groundDistance = 0.4f;
+    public float groundDistance = 0.1f;
     public LayerMask groundMask;
 
-    public Transform target;
 
 
     void Update()
@@ -64,20 +66,21 @@ public class ThirdPersonMovement : MonoBehaviour
 
             var step = speed * Time.deltaTime;
 
-            //code for facing enemy, MIGHT NEED SOME EXTRA WORK
+            //code for facing enemy, LITERALLY BRODEN AF
             //right now only faces towards enemy but 
-            if (EnemyTargeter.GetComponent<EnemyTargeter>().lockedOnToEnemy == true)
-            {
+
+            //if (EnemyTargeter.GetComponent<EnemyTargeter>().lockedOnToEnemy == true)
+            //{
 
 
-                transform.LookAt(target.transform);
+            //    transform.LookAt(target.transform);
 
-                //transform.rotation = Quaternion.Euler(0f, angle, 0f);
+            //    //transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
-            }
-            else
+            //}
+            //else
                 transform.rotation = Quaternion.Euler(0f, angle, 0f);
-
+            
 
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             controller.Move(moveDir.normalized * speed * Time.deltaTime * speedMultiplier);
