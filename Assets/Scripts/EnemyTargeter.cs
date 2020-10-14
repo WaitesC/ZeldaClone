@@ -53,6 +53,7 @@ public class EnemyTargeter : MonoBehaviour
             }
         }
         return closest;
+
     }
 
     //finds distance between player and closest enemy
@@ -132,12 +133,14 @@ public class EnemyTargeter : MonoBehaviour
 
     }
 
-    void EndLockOnFunction()
+    public void EndLockOnFunction()
     {
         //FindClosestEnemy().gameObject.transform.localScale = new Vector3(1, 1, 1);
 
         lockOnIcon.SetActive(false);
         enemyHealthBarIcon.SetActive(false);
+        Target.gameObject.transform.position = Player.gameObject.transform.position;
+        lockedOnToEnemy = false;
 
     }
 

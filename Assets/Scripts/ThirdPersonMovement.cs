@@ -34,12 +34,28 @@ public class ThirdPersonMovement : MonoBehaviour
     public float groundDistance = 0.1f;
     public LayerMask groundMask;
 
+    //Dodge stuff
+    public Rigidbody rb;
+    public float PushAmt;
+
+    private float fixedDeltaTime;
 
 
     void Update()
     {
         Movement();
 
+    }
+
+    void Awake()
+    {
+        // Make a copy of the fixedDeltaTime, it defaults to 0.02f, but it can be changed in the editor
+        this.fixedDeltaTime = Time.fixedDeltaTime;
+    }
+
+    void Start()
+    {
+        //rb = GetComponent<Rigidbody>();
     }
 
     //handles character movement
@@ -67,19 +83,19 @@ public class ThirdPersonMovement : MonoBehaviour
             var step = speed * Time.deltaTime;
 
             //code for facing enemy, LITERALLY BRODEN AF
-            //right now only faces towards enemy but 
+            //right now only faces towards enemy but
 
-            //if (EnemyTargeter.GetComponent<EnemyTargeter>().lockedOnToEnemy == true)
-            //{
+            if (EnemyTargeter.GetComponent<EnemyTargeter>().lockedOnToEnemy == true)
+                {
 
 
-            //    transform.LookAt(target.transform);
+                    transform.LookAt(target.transform);
 
-            //    //transform.rotation = Quaternion.Euler(0f, angle, 0f);
+                    //transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
-            //}
-            //else
-                transform.rotation = Quaternion.Euler(0f, angle, 0f);
+                }
+                else
+                    transform.rotation = Quaternion.Euler(0f, angle, 0f);
             
 
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
@@ -91,6 +107,8 @@ public class ThirdPersonMovement : MonoBehaviour
         Jump();
 
         Gravity();
+
+        Dodge();
     }
 
     //checks for sprint input
@@ -116,11 +134,25 @@ public class ThirdPersonMovement : MonoBehaviour
 
     void Jump()
     {
-        if(Input.GetAxis("Jump") !=0 && isGrounded)
+        if(Input.GetButtonDown("Jump") && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
     }
 
-    
+    void Dodge()
+    {
+        if(Input.GetButtonDown("Dodge") && isGrounded)
+        {
+            //rb.AddForce(transform.forward * PushAmt, ForceMode.Impulse);
+
+            if (Time.timeScale == 1.0f)
+                Time.timeScale = 0.1f;
+            else
+                Time.timeScale = 1.0f;
+            // Adjust fixed delta time according to timescale
+            // The fixed delta time will now be 0.02 frames per real-time second
+            Time.fixedDeltaTime = this.fixedDeltaTime * Time.timeScale;
+        }
+    }
 }
