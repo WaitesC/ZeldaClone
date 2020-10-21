@@ -26,7 +26,7 @@ public class PlayerHealth : MonoBehaviour
         DamageTester();
     }
 
-    void TakeDamage(int damage)
+    public void TakeDamage(int damage)
     {
         playerStats.currentHealth -= damage;
 

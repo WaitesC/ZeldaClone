@@ -7,6 +7,13 @@ public class EnemyHealthBar : MonoBehaviour
 {
     public Slider slider;
 
+    UnitStats unitStats;
+
+    void Start()
+    {
+        //unitStats = gameObject.GetComponent<UnitStats>();
+    }
+
     public void SetMaxHealth(float health)
     {
         slider.maxValue = health;
@@ -18,4 +25,9 @@ public class EnemyHealthBar : MonoBehaviour
     {
         slider.value = health;
     }
+
+    //void Update()
+    //{
+    //    SetCurrentHealth(unitStats.currentHealth);
+    //}
 }

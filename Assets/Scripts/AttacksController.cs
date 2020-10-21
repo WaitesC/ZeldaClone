@@ -4,17 +4,21 @@ using UnityEngine;
 
 public class AttacksController : MonoBehaviour
 {
+    //players animator
     public Animator playerAnimator;
 
+    //attack range and position
     public Transform attackPoint;
     public float attackRange = 0.5f;
 
+    //enemy layers
     public LayerMask enemyLayers;
 
+    //attack timings
     public float attackRate = 2f;
     float nextAttackTime = 0f;
 
-    // Update is called once per frame
+
     void Update()
     {
         if(Time.time >= nextAttackTime)
@@ -29,6 +33,7 @@ public class AttacksController : MonoBehaviour
         
     }
 
+    //basic attack function
     void Attack()
     {
         //play attack anim
@@ -40,7 +45,7 @@ public class AttacksController : MonoBehaviour
         foreach(Collider enemy in hitEnemies)
         {
             enemy.GetComponent<UnitStats>().TakeDamage(GetComponent<UnitStats>().attackPower);
-            Debug.Log("attacked");
+            Debug.Log("Player Normal Attack");
         }
     }
 

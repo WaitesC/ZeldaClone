@@ -13,7 +13,8 @@ public class ThirdPersonMovement : MonoBehaviour
     //ref to camera target
     public Transform target;
 
-
+    Vector3 dir;
+    float hor, ver;
     //speed stuff
     public float speed = 6f;
 
@@ -35,11 +36,18 @@ public class ThirdPersonMovement : MonoBehaviour
     public LayerMask groundMask;
 
     //Dodge stuff
-    public Rigidbody rb;
-    public float PushAmt;
+    //https://medium.com/ironequal/unity-character-controller-vs-rigidbody-a1e243591483
+    public Vector3 Drag;
+    public float DashDistance = 5f;
+
+    //player animation
+    public Animator playerAnimator;
 
     private float fixedDeltaTime;
 
+    //rotation angle for player movement/ lock on
+    float angle;
+    float targetAngle;
 
     void Update()
     {
@@ -61,6 +69,9 @@ public class ThirdPersonMovement : MonoBehaviour
     //handles character movement
     void Movement()
     {
+        //play walking animation
+        
+
         //sets to is grounded when touching anything with ground mask
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
@@ -69,16 +80,16 @@ public class ThirdPersonMovement : MonoBehaviour
             velocity.y = -2f;
         }
 
-        float hor = Input.GetAxisRaw("Horizontal");
-        float ver = Input.GetAxisRaw("Vertical");
-        Vector3 dir = new Vector3(hor, 0f, ver).normalized;
+         hor = Input.GetAxisRaw("Horizontal");
+         ver = Input.GetAxisRaw("Vertical");
+         dir = new Vector3(hor, 0f, ver).normalized;
 
         if (dir.magnitude >= 0.1f)
         {
-            float targetAngle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
-            float targetAngle2 = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg + target.position.y - transform.position.y;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref smoothTurnVelocity, smoothTurnTime);
-            float angle2 = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle2, ref smoothTurnVelocity, smoothTurnTime);
+             targetAngle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+            //float targetAngle2 = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg + target.position.y - transform.position.y;
+             angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref smoothTurnVelocity, smoothTurnTime);
+            //float angle2 = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle2, ref smoothTurnVelocity, smoothTurnTime);
 
             var step = speed * Time.deltaTime;
 
@@ -86,16 +97,16 @@ public class ThirdPersonMovement : MonoBehaviour
             //right now only faces towards enemy but
 
             if (EnemyTargeter.GetComponent<EnemyTargeter>().lockedOnToEnemy == true)
-                {
+            {
 
 
-                    transform.LookAt(target.transform);
+                transform.LookAt(target.transform);
 
-                    //transform.rotation = Quaternion.Euler(0f, angle, 0f);
+                //transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
-                }
-                else
-                    transform.rotation = Quaternion.Euler(0f, angle, 0f);
+            }
+            else
+                transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
             
 
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
@@ -109,6 +120,10 @@ public class ThirdPersonMovement : MonoBehaviour
         Gravity();
 
         Dodge();
+
+        velocity.x /= 1 + Drag.x * Time.deltaTime;
+        velocity.y /= 1 + Drag.y * Time.deltaTime;
+        velocity.z /= 1 + Drag.z * Time.deltaTime;
     }
 
     //checks for sprint input
@@ -142,17 +157,28 @@ public class ThirdPersonMovement : MonoBehaviour
 
     void Dodge()
     {
-        if(Input.GetButtonDown("Dodge") && isGrounded)
-        {
-            //rb.AddForce(transform.forward * PushAmt, ForceMode.Impulse);
+        //if(Input.GetButtonDown("Dodge") && isGrounded)
+        //{
+        //    if (Time.timeScale == 1.0f)
+        //        Time.timeScale = 0.1f;
+        //    else
+        //        Time.timeScale = 1.0f;
+        //    // Adjust fixed delta time according to timescale
+        //    // The fixed delta time will now be 0.02 frames per real-time second
+        //    Time.fixedDeltaTime = this.fixedDeltaTime * Time.timeScale;
+        //}
 
-            if (Time.timeScale == 1.0f)
-                Time.timeScale = 0.1f;
+        if (Input.GetButtonDown("Dodge") && isGrounded)
+        {
+            if (EnemyTargeter.GetComponent<EnemyTargeter>().lockedOnToEnemy == true)
+            {
+                velocity += Vector3.Scale(dir, DashDistance * new Vector3((Mathf.Log(1f / (Time.deltaTime * Drag.x + 1)) / -Time.deltaTime), 0, (Mathf.Log(1f / (Time.deltaTime * Drag.z + 1)) / -Time.deltaTime)));
+            }
             else
-                Time.timeScale = 1.0f;
-            // Adjust fixed delta time according to timescale
-            // The fixed delta time will now be 0.02 frames per real-time second
-            Time.fixedDeltaTime = this.fixedDeltaTime * Time.timeScale;
+                velocity += Vector3.Scale(transform.forward, DashDistance * new Vector3((Mathf.Log(1f / (Time.deltaTime * Drag.x + 1)) / -Time.deltaTime), 0, (Mathf.Log(1f / (Time.deltaTime * Drag.z + 1)) / -Time.deltaTime)));
+            
+            Debug.Log("Dash");
+            
         }
     }
 }
