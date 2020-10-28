@@ -241,7 +241,7 @@ Material:
     - _Metallic2: 0
     - _Metallic3: 0
     - _Mode: 0
-    - _NormalMult: 1
+    - _NormalMult: 0.515
     - _NumLayersCount: 1
     - _OcclusionMult: 1
     - _OcclusionStrength: 1
@@ -252,7 +252,7 @@ Material:
     - _SPECULAR_ROUGHNESS: 0
     - _SampleGI: 0
     - _Shininess: 0
-    - _Smoothness: 0.63
+    - _Smoothness: 0.333
     - _Smoothness0: 0.5
     - _Smoothness1: 0.5
     - _Smoothness2: 0.5
@@ -288,5 +288,5 @@ Material:
     - _SPECULAR_COLOR: {r: 1, g: 1, b: 1, a: 0}
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
-    - _Specular: {r: 0.071, g: 0.0628735, b: 0.05474699, a: 1}
+    - _Specular: {r: 0.14899999, g: 0.1237846, b: 0.09856922, a: 1}
     - _TextureTiling: {r: 1, g: 1, b: 0, a: 0}

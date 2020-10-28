@@ -216,7 +216,7 @@ Material:
     - _Cull: 2
     - _Cutoff: 0.5
     - _DabsRotation: 13
-    - _DabsTiling: 30
+    - _DabsTiling: 50
     - _DetailNormalMapScale: 1
     - _DistortionBlend: 0.5
     - _DistortionEnabled: 0

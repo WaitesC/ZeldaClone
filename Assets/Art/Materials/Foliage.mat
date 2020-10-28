@@ -203,7 +203,7 @@ Material:
     - Vector1_2B150D9: 0.12
     - Vector1_500C4BC6: 0.222
     - Vector1_817A7D95: 0.139
-    - Vector1_962926F1: 0.63
+    - Vector1_962926F1: 0.694
     - Vector1_9A90ED65: 0.196
     - Vector1_AB40AAEC: 0.748
     - Vector1_CDD09EC7: 0.388
@@ -219,8 +219,8 @@ Material:
     - _ColorMode: 0
     - _Cull: 2
     - _Cutoff: 0.5
-    - _DabsRotation: 13
-    - _DabsTiling: 1
+    - _DabsRotation: 14.67
+    - _DabsTiling: 11
     - _DetailNormalMapScale: 1
     - _DistortionBlend: 0.5
     - _DistortionEnabled: 0
@@ -256,7 +256,7 @@ Material:
     - _SPECULAR_ROUGHNESS: 0
     - _SampleGI: 0
     - _Shininess: 0
-    - _Smoothness: 0.63
+    - _Smoothness: 0.151
     - _Smoothness0: 0.5
     - _Smoothness1: 0.5
     - _Smoothness2: 0.5
@@ -292,5 +292,5 @@ Material:
     - _SPECULAR_COLOR: {r: 1, g: 1, b: 1, a: 0}
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
-    - _Specular: {r: 0, g: 0, b: 0, a: 1}
+    - _Specular: {r: 0.053760003, g: 0.064, b: 0.03584, a: 1}
     - _TextureTiling: {r: 1, g: 1, b: 0, a: 0}
