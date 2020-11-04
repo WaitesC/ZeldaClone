@@ -27,7 +27,7 @@ public class ThirdPersonMovement : MonoBehaviour
     //gravity stuff
     Vector3 velocity;
     public float gravity = -9.81f;
-    bool isGrounded;
+    public bool isGrounded;
     public float jumpHeight = 3f;
 
     //ground check stuff
@@ -64,6 +64,8 @@ public class ThirdPersonMovement : MonoBehaviour
     void Start()
     {
         //rb = GetComponent<Rigidbody>();
+
+        //cam = GameObject.Find("Main Camera").GetComponent<Transform>();
     }
 
     //handles character movement
@@ -157,7 +159,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
     void Dodge()
     {
-        //if(Input.GetButtonDown("Dodge") && isGrounded)
+        //if (Input.GetButtonDown("Dodge") && isGrounded)
         //{
         //    if (Time.timeScale == 1.0f)
         //        Time.timeScale = 0.1f;
@@ -177,7 +179,7 @@ public class ThirdPersonMovement : MonoBehaviour
             else
                 velocity += Vector3.Scale(transform.forward, DashDistance * new Vector3((Mathf.Log(1f / (Time.deltaTime * Drag.x + 1)) / -Time.deltaTime), 0, (Mathf.Log(1f / (Time.deltaTime * Drag.z + 1)) / -Time.deltaTime)));
             
-            Debug.Log("Dash");
+            //Debug.Log("Dash");
             
         }
     }
