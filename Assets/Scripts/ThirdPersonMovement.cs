@@ -7,7 +7,8 @@ public class ThirdPersonMovement : MonoBehaviour
     //reference to char controller
     public CharacterController controller;
     //reference to enemy targeter controller
-    public GameObject EnemyTargeter;
+    //public GameObject EnemyTargeter;
+    EnemyTargeter enemyTargeter;
     //ref to cameraq
     public Transform cam;
     //ref to camera target
@@ -57,15 +58,15 @@ public class ThirdPersonMovement : MonoBehaviour
 
     void Awake()
     {
+        //cam = GameObject.Find("Main Camera").GetComponent<Transform>();
         // Make a copy of the fixedDeltaTime, it defaults to 0.02f, but it can be changed in the editor
         this.fixedDeltaTime = Time.fixedDeltaTime;
     }
 
     void Start()
     {
-        //rb = GetComponent<Rigidbody>();
-
-        //cam = GameObject.Find("Main Camera").GetComponent<Transform>();
+        enemyTargeter = GetComponent<EnemyTargeter>();
+        
     }
 
     //handles character movement
@@ -98,7 +99,7 @@ public class ThirdPersonMovement : MonoBehaviour
             //code for facing enemy, LITERALLY BRODEN AF
             //right now only faces towards enemy but
 
-            if (EnemyTargeter.GetComponent<EnemyTargeter>().lockedOnToEnemy == true)
+            if (enemyTargeter.lockedOnToEnemy == true)
             {
 
 
@@ -172,7 +173,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Dodge") && isGrounded)
         {
-            if (EnemyTargeter.GetComponent<EnemyTargeter>().lockedOnToEnemy == true)
+            if (enemyTargeter.lockedOnToEnemy == true)
             {
                 velocity += Vector3.Scale(dir, DashDistance * new Vector3((Mathf.Log(1f / (Time.deltaTime * Drag.x + 1)) / -Time.deltaTime), 0, (Mathf.Log(1f / (Time.deltaTime * Drag.z + 1)) / -Time.deltaTime)));
             }

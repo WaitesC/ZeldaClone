@@ -8,12 +8,14 @@ public class UnitStats : MonoBehaviour
     public float currentHealth;
     public int attackPower;
 
-    public EnemyTargeter enemyTargeter;
+    EnemyTargeter enemyTargeter;
     
     // Start is called before the first frame update
     void Start()
     {
         currentHealth = maxHealth;
+
+        enemyTargeter = GameObject.Find("Player").GetComponent<EnemyTargeter>();
     }
 
     // Update is called once per frame

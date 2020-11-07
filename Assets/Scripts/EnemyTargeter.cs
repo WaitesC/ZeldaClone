@@ -7,23 +7,31 @@ public class EnemyTargeter : MonoBehaviour
     GameObject closestEnemy;
     float closestEnemyDistance;
 
-    public float lockOnDistance = 5;
+    public float lockOnDistance = 10;
     public bool lockedOnToEnemy;
 
-    public GameObject Target;
-    public GameObject Player;
+    GameObject Target;
+    GameObject Player;
 
-    public GameObject lockOnIcon;
-    public GameObject enemyHealthBarIcon;
+    GameObject lockOnIcon;
+    GameObject enemyHealthBarIcon;
 
-    public EnemyHealthBar enemyHealthBar;
+    EnemyHealthBar enemyHealthBar;
 
     //enemy stats
     float enemyMaxHealth;
 
     void Start()
     {
-        
+        Player = GameObject.Find("Player");
+        Target = GameObject.Find("Target");
+
+        lockOnIcon = GameObject.Find("Locked On Icon");
+
+        enemyHealthBarIcon = GameObject.Find("Enemy Health Bar");
+        enemyHealthBar = GameObject.Find("Enemy Health Bar Fill").GetComponent<EnemyHealthBar>();
+
+
     }
 
     void Update()

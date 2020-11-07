@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public UnitStats playerStats;
-    public EnemyHealthBar playerHealthBar;
+    UnitStats playerStats;
+    EnemyHealthBar playerHealthBar;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        playerStats = GameObject.Find("Player").GetComponent<UnitStats>();
+        playerHealthBar = GameObject.Find("Player Health Bar Fill").GetComponent<EnemyHealthBar>();
+
+
         //sets value of current health
         playerStats.currentHealth = playerStats.maxHealth;
         //sets current health in health bar
