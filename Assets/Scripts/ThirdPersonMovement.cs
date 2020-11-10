@@ -141,12 +141,14 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             speedMultiplier = 3;
 
-            animator.SetTrigger("Sprint");
+            animator.SetBool("Sprint", true);
         }
 
         if (Input.GetAxis("Sprint") != 1f)
         {
             speedMultiplier = 1;
+
+            animator.SetBool("Sprint", false);
         }
     }
 

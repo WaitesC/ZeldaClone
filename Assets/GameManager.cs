@@ -31,7 +31,9 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(Time.timeScale == 1.0f)
+            slowMotionVisual.enabled = false;
+
     }
 
     public void SlowDown()
@@ -52,14 +54,14 @@ public class GameManager : MonoBehaviour
     void ResetTime()
     {
         Time.timeScale = 1.0f;
-        slowMotionVisual.enabled = !slowMotionVisual.enabled;
+        slowMotionVisual.enabled = false;
 
         playerRetaliate = false;
     }
 
     void SlowDownStart()
     {
-        slowMotionVisual.enabled = !slowMotionVisual.enabled;
+        slowMotionVisual.enabled = true;
         playerRetaliate = true;
         //speed at which the game runs during slow mo
         Time.timeScale = 0.1f;

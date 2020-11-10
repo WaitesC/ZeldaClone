@@ -63,7 +63,8 @@ public class AttacksController : MonoBehaviour
         foreach(Collider enemy in hitEnemies)
         {
             enemy.GetComponent<UnitStats>().TakeDamage(GetComponent<UnitStats>().attackPower);
-            Debug.Log("Player Normal Attack");
+
+            enemy.GetComponent<EnemyAI>().enemyAnimator.SetTrigger("Hurt");
         }
     }
 

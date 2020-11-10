@@ -25,7 +25,7 @@ public class EnemyAI : MonoBehaviour
     GameManager gameManager;
 
     //animator for enemy movement
-    Animator enemyAnimator;
+    public Animator enemyAnimator;
 
     //var states = [FollowPlayer, Idle];
 
@@ -231,6 +231,8 @@ public class EnemyAI : MonoBehaviour
             foreach(Collider player in hitPlayers)
             {
                 player.GetComponent<PlayerHealth>().TakeDamage(attackPower);
+
+                enemyAnimator.SetTrigger("Attack");
 
                 //Debug.Log("Attack Player");
 
