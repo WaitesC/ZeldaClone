@@ -10,7 +10,15 @@ public class EnemyTargeter : MonoBehaviour
     public float lockOnDistance = 10;
     public bool lockedOnToEnemy;
 
-    GameObject Target;
+    public static Vector3 enemyDirection;
+
+    Animator animator;
+    ThirdPersonMovement thirdPersonMovement;
+
+    Vector3 right;
+    Vector3 left;
+
+    GameObject cameraTarget;
     GameObject Player;
 
     GameObject lockOnIcon;
@@ -24,12 +32,15 @@ public class EnemyTargeter : MonoBehaviour
     void Start()
     {
         Player = GameObject.Find("Player");
-        Target = GameObject.Find("Target");
+        cameraTarget = GameObject.Find("Target");
 
         lockOnIcon = GameObject.Find("Locked On Icon");
 
         enemyHealthBarIcon = GameObject.Find("Enemy Health Bar");
         enemyHealthBar = GameObject.Find("Enemy Health Bar Fill").GetComponent<EnemyHealthBar>();
+
+        animator = GetComponent<Animator>();
+        thirdPersonMovement = GetComponent<ThirdPersonMovement>();
 
 
     }
@@ -121,11 +132,34 @@ public class EnemyTargeter : MonoBehaviour
             
         }
 
-        //moves camera target to enemy if locked on
+        //stuff that happens when player is locked on to enemy
         if (lockedOnToEnemy)
-            Target.gameObject.transform.position = FindClosestEnemy().gameObject.transform.position;
+        {
+            animator.SetBool("LockedOn", true);
+            cameraTarget.gameObject.transform.position = FindClosestEnemy().gameObject.transform.position;
+
+            enemyDirection = (transform.position - FindClosestEnemy().gameObject.transform.position).normalized;
+
+            right = Vector3.Cross(Vector3.up, enemyDirection).normalized;
+
+            float rightMag = (thirdPersonMovement.dir - right).sqrMagnitude;
+
+            animator.SetFloat("LockedOnMovement", rightMag);
+
+
+            //if (rightMag < 1)
+            //    animator.SetBool("LeftMovement");
+            
+            //if(rightMag > 3.0f)
+            //    Debug.Log("Right");
+
+        }
         else
-            Target.gameObject.transform.position = Player.gameObject.transform.position;
+        {
+            cameraTarget.gameObject.transform.position = Player.gameObject.transform.position;
+            animator.SetBool("LockedOn", false);
+
+        }
 
     }
 
@@ -147,7 +181,7 @@ public class EnemyTargeter : MonoBehaviour
 
         lockOnIcon.SetActive(false);
         enemyHealthBarIcon.SetActive(false);
-        Target.gameObject.transform.position = Player.gameObject.transform.position;
+        cameraTarget.gameObject.transform.position = Player.gameObject.transform.position;
         lockedOnToEnemy = false;
 
     }

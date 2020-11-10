@@ -43,6 +43,8 @@ public class UnitStats : MonoBehaviour
         //GetComponent<Collider>().enabled = false;
         //this.enabled = false;
 
+        Time.timeScale = 1.0f;
+
         enemyTargeter.EndLockOnFunction();
 
         Destroy(gameObject);

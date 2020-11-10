@@ -18,10 +18,28 @@ public class AttacksController : MonoBehaviour
     public float attackRate = 2f;
     float nextAttackTime = 0f;
 
+    GameManager gameManager;
+
+    void Start()
+    {
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+
+    }
 
     void Update()
     {
-        if(Time.time >= nextAttackTime)
+        if(gameManager.playerRetaliate)
+        {
+            if (Input.GetButtonDown("Attack"))
+            {
+                Attack();
+            }
+        }
+            
+
+
+
+        if (Time.time >= nextAttackTime)
         {
             if (Input.GetButtonDown("Attack"))
             {

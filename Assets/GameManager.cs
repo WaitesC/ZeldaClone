@@ -1,0 +1,79 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Reflection;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class GameManager : MonoBehaviour
+{
+    public bool playerRetaliate;
+
+    public bool moveTowardsEnemy;
+
+    private float fixedDeltaTime;
+
+    Image slowMotionVisual;
+
+    void Awake()
+    {
+        // Make a copy of the fixedDeltaTime, it defaults to 0.02f, but it can be changed in the editor
+        this.fixedDeltaTime = Time.fixedDeltaTime;
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        playerRetaliate = false;
+        slowMotionVisual = GameObject.Find("Slow Motion Visual").GetComponent<Image>();
+        slowMotionVisual.enabled = !slowMotionVisual.enabled;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    public void SlowDown()
+    {
+
+        if (Time.timeScale == 1.0f)
+        {
+            SlowDownStart();
+        }
+        else
+            SlowDownEnd();
+        // Adjust fixed delta time according to timescale
+        // The fixed delta time will now be 0.02 frames per real-time second
+        Time.fixedDeltaTime = this.fixedDeltaTime * Time.timeScale;
+    }
+
+    //resets time to normal after dodge is finished
+    void ResetTime()
+    {
+        Time.timeScale = 1.0f;
+        slowMotionVisual.enabled = !slowMotionVisual.enabled;
+
+        playerRetaliate = false;
+    }
+
+    void SlowDownStart()
+    {
+        slowMotionVisual.enabled = !slowMotionVisual.enabled;
+        playerRetaliate = true;
+        //speed at which the game runs during slow mo
+        Time.timeScale = 0.1f;
+
+        //how long until the speed is reset
+        Invoke("ResetTime", 0.2f);
+    }
+    
+    void SlowDownEnd()
+    {
+
+        Time.timeScale = 1.0f;
+
+        slowMotionVisual.enabled = !slowMotionVisual.enabled;
+
+    }
+}

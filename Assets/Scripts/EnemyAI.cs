@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Security.Cryptography;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -21,6 +22,7 @@ public class EnemyAI : MonoBehaviour
 
     public float followDistance;
 
+    GameManager gameManager;
 
     //animator for enemy movement
     Animator enemyAnimator;
@@ -52,6 +54,17 @@ public class EnemyAI : MonoBehaviour
     bool dodgeable;
     private float fixedDeltaTime;
 
+    //ground check stuff
+    public Transform groundCheck;
+    public float groundDistance = 0.1f;
+    public LayerMask groundMask;
+
+    //gravity stuff
+    Vector3 velocity;
+    public float gravity = -9.81f;
+    public bool isGrounded;
+    public float jumpHeight = 3f;
+
 
     void Awake()
     {
@@ -61,6 +74,8 @@ public class EnemyAI : MonoBehaviour
 
     void Start()
     {
+        //ref to game manager
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         //setting relevant components
         enemyAnimator = gameObject.GetComponent<Animator>();
 
@@ -74,6 +89,9 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
+        //Movement();
+        //transform.Rotate(0, transform.rotation.y, transform.rotation.z, Space.World);
+
         currentDist = Vector3.Distance(Player.position, transform.position);
 
         if (currentDist < engageDist)
@@ -83,11 +101,29 @@ public class EnemyAI : MonoBehaviour
             else if (Vector3.Distance(transform.position, Player.position) < followDistance)
                 AttackPlayerStatesChanger();
             else
-                transform.LookAt(Player);
+                LookAtPlayer();
         }
 
         DodgeCheck();
 
+    }
+
+    void Movement()
+    {
+        //sets to is grounded when touching anything with ground mask
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+
+        if (isGrounded && velocity.y < 0)
+        {
+            velocity.y = -2f;
+        }
+
+        Gravity();
+    }
+
+    void Gravity()
+    {
+        velocity.y += gravity * Time.deltaTime;
     }
 
     void FollowPlayerStatesChanger()
@@ -128,7 +164,7 @@ public class EnemyAI : MonoBehaviour
         //play walking animation
         //enemyAnimator.
 
-        transform.LookAt(Player);
+        LookAtPlayer();
 
         if (Vector3.Distance(transform.position, Player.position) >= MinDist)
         {
@@ -178,12 +214,12 @@ public class EnemyAI : MonoBehaviour
 
     void Idle()
     {
-        transform.LookAt(Player);
+        LookAtPlayer();
     }
 
     void AttackPlayer()
     {
-        transform.LookAt(Player);
+        LookAtPlayer();
 
         if (Time.time >= attackTime)
         {
@@ -219,33 +255,11 @@ public class EnemyAI : MonoBehaviour
     void DodgeCheck()
     {
         if (Input.GetButtonDown("Dodge") && thirdPersonMovement.isGrounded && dodgeable)
-            SlowDown();
+            gameManager.SlowDown();
 
     }
 
-    void SlowDown()
-    {
-        if (Time.timeScale == 1.0f)
-        {
-            //speed at which the game runs during slow mo
-            Time.timeScale = 0.1f;
-
-            //how long until the speed is reset
-            Invoke("ResetTime", 0.2f);
-        }
-        else
-            Time.timeScale = 1.0f;
-        // Adjust fixed delta time according to timescale
-        // The fixed delta time will now be 0.02 frames per real-time second
-        Time.fixedDeltaTime = this.fixedDeltaTime * Time.timeScale;
-    }
-
-    //resets time to normal after dodge is finished
-    void ResetTime()
-    {
-        Time.timeScale = 1.0f;
-
-    }
+    
 
     void stateChecker()
     {
@@ -270,5 +284,12 @@ public class EnemyAI : MonoBehaviour
         followPlayer = false;
         attackPlayer = false;
         idle = true;
+    }
+
+    //funciton to rotate towards player
+    void LookAtPlayer()
+    {
+        transform.LookAt(new Vector3(Player.position.x, transform.position.y, Player.position.z));
+
     }
 }
