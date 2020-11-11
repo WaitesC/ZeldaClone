@@ -198,7 +198,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   Drag: {x: 20, y: 0, z: 20}
-  DashDistance: 5
+  DashDistance: 3
 --- !u!95 &5543780644892026872
 Animator:
   serializedVersion: 3
@@ -294,7 +294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 673dbeb2a67cc064e85d293d10721a42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lockOnDistance: 10
+  lockOnDistance: 6
   lockedOnToEnemy: 0
 --- !u!1001 &56169410
 PrefabInstance:

@@ -6,11 +6,15 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    Animator playerAnimator;
+
     public bool playerRetaliate;
 
     public bool moveTowardsEnemy;
 
     private float fixedDeltaTime;
+
+    public float attackAnimSpeedMulti;
 
     Image slowMotionVisual;
 
@@ -23,15 +27,22 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerAnimator = GameObject.Find("Player").GetComponent<Animator>();
+
         playerRetaliate = false;
         slowMotionVisual = GameObject.Find("Slow Motion Visual").GetComponent<Image>();
         slowMotionVisual.enabled = !slowMotionVisual.enabled;
+
+        attackAnimSpeedMulti = 2.5f;
+        playerAnimator.SetFloat("AttackAnimSpeedMulti", attackAnimSpeedMulti);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Time.timeScale == 1.0f)
+        
+
+        if (Time.timeScale == 1.0f)
             slowMotionVisual.enabled = false;
 
     }
@@ -68,10 +79,13 @@ public class GameManager : MonoBehaviour
 
         //how long until the speed is reset
         Invoke("ResetTime", 0.2f);
+
+        playerAnimator.SetFloat("AttackAnimSpeedMulti", 30.0f);
     }
-    
+
     void SlowDownEnd()
     {
+        playerAnimator.SetFloat("AttackAnimSpeedMulti", 2.5f);
 
         Time.timeScale = 1.0f;
 
