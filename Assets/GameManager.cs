@@ -43,7 +43,11 @@ public class GameManager : MonoBehaviour
         
 
         if (Time.timeScale == 1.0f)
+        {
+            playerAnimator.SetFloat("AttackAnimSpeedMulti", 2.5f);
             slowMotionVisual.enabled = false;
+
+        }
 
     }
 
