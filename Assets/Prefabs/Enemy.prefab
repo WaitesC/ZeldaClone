@@ -256,6 +256,7 @@ MonoBehaviour:
   MaxDist: 10
   MinDist: 2
   followDistance: 5
+  enemyAnimator: {fileID: 0}
   nextStateTime: 2
   nextAttackTime: 0.5
   playerLayers:
