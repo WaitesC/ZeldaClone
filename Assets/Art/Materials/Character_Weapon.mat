@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Ground_Grass
+  m_Name: Character_Weapon
   m_Shader: {fileID: -6465566751694194690, guid: ea152aea2817c76489c1cee84f82f3a7,
     type: 3}
   m_ShaderKeywords: ETC1_EXTERNAL_ALPHA _GLOSSYREFLECTIONS_OFF
@@ -70,7 +70,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 3aaabd451d722d94992c7ad788588ecf, type: 3}
+        m_Texture: {fileID: 2800000, guid: 7b9597082805af242a34a459e8a5191e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -168,4 +168,4 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
     - _Specular: {r: 0.2075472, g: 0.2075472, b: 0.2075472, a: 0}
-    - _TextureTiling: {r: 10, g: 10, b: 0, a: 0}
+    - _TextureTiling: {r: 1, g: 1, b: 0, a: 0}
