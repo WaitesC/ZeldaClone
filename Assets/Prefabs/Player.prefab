@@ -188,7 +188,9 @@ MonoBehaviour:
   target: {fileID: 5543780643604163097}
   dir: {x: 0, y: 0, z: 0}
   speed: 6
+  movMag: 0
   smoothTurnTime: 0.1
+  velocity: {x: 0, y: 0, z: 0}
   gravity: -49.05
   isGrounded: 0
   jumpHeight: 1
@@ -212,7 +214,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 1a8603b7b6d868b49abde66ecaaac59c, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -248,10 +250,15 @@ MonoBehaviour:
   playerAnimator: {fileID: 5543780644892026872}
   attackPoint: {fileID: 5543780644510572666}
   attackRange: 1
+  attackPower: 1
+  attackPower2: 5
   enemyLayers:
     serializedVersion: 2
     m_Bits: 1024
   attackRate: 2
+  attackRate2: 3
+  attackDelay: 0.4
+  attack2Delay: 1.5
 --- !u!114 &5543780644892026875
 MonoBehaviour:
   m_ObjectHideFlags: 0
