@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
 
     public float attackAnimSpeedMulti;
 
+    public bool canMove;
+
     Image slowMotionVisual;
 
     void Awake()
@@ -33,7 +35,7 @@ public class GameManager : MonoBehaviour
         slowMotionVisual = GameObject.Find("Slow Motion Visual").GetComponent<Image>();
         slowMotionVisual.enabled = !slowMotionVisual.enabled;
 
-        attackAnimSpeedMulti = 2.5f;
+        //attackAnimSpeedMulti = 2.5f;
         playerAnimator.SetFloat("AttackAnimSpeedMulti", attackAnimSpeedMulti);
     }
 
@@ -44,7 +46,7 @@ public class GameManager : MonoBehaviour
 
         if (Time.timeScale == 1.0f)
         {
-            playerAnimator.SetFloat("AttackAnimSpeedMulti", 2.5f);
+            playerAnimator.SetFloat("AttackAnimSpeedMulti", attackAnimSpeedMulti);
             slowMotionVisual.enabled = false;
 
         }

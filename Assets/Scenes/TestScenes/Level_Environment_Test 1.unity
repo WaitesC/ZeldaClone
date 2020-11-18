@@ -2987,7 +2987,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 392726782}
-  m_LocalRotation: {x: 0.32890218, y: 0.0029879634, z: -0.0010406509, w: 0.9443587}
+  m_LocalRotation: {x: 0.32890218, y: 0.0029879957, z: -0.0010406622, w: 0.9443587}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -6594,7 +6594,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 835924097}
-  m_LocalRotation: {x: 0.3460252, y: 0.0029685562, z: -0.0010948342, w: 0.9382199}
+  m_LocalRotation: {x: 0.34602517, y: 0.0029685285, z: -0.0010948239, w: 0.9382199}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -7453,6 +7453,31 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5543780644892026873, guid: eeeb952434fb26b49a30dce4052e8541,
+        type: 3}
+      propertyPath: attack2Delay
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5543780644892026873, guid: eeeb952434fb26b49a30dce4052e8541,
+        type: 3}
+      propertyPath: attackDelay
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5543780644892026873, guid: eeeb952434fb26b49a30dce4052e8541,
+        type: 3}
+      propertyPath: attackPower
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5543780644892026873, guid: eeeb952434fb26b49a30dce4052e8541,
+        type: 3}
+      propertyPath: attackPower2
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5543780644892026873, guid: eeeb952434fb26b49a30dce4052e8541,
+        type: 3}
+      propertyPath: attackRate2
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eeeb952434fb26b49a30dce4052e8541, type: 3}
 --- !u!1001 &947742035
@@ -7716,7 +7741,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.32890224, y: 0.002987947, z: -0.0010406452, w: 0.9443587}
+  m_LocalRotation: {x: 0.32890224, y: 0.002988012, z: -0.0010406678, w: 0.9443587}
   m_LocalPosition: {x: -5.663687, y: 9.943806, z: -24.833189}
   m_LocalScale: {x: 1, y: 2.0000002, z: 1.0000001}
   m_Children: []
@@ -8969,7 +8994,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerRetaliate: 0
   moveTowardsEnemy: 0
-  attackAnimSpeedMulti: 0
+  attackAnimSpeedMulti: 2.5
+  canMove: 0
 --- !u!4 &1109651555
 Transform:
   m_ObjectHideFlags: 0

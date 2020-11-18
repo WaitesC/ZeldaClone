@@ -18,6 +18,7 @@ public class ThirdPersonMovement : MonoBehaviour
     float hor, ver;
     //speed stuff
     public float speed = 6f;
+    public float movMag;
 
     float speedMultiplier = 1;
 
@@ -26,7 +27,7 @@ public class ThirdPersonMovement : MonoBehaviour
     float smoothTurnVelocity;
 
     //gravity stuff
-    Vector3 velocity;
+    public Vector3 velocity;
     public float gravity = -9.81f;
     public bool isGrounded;
     public float jumpHeight = 3f;
@@ -50,6 +51,8 @@ public class ThirdPersonMovement : MonoBehaviour
     float angle;
     float targetAngle;
 
+    GameManager gameManager;
+
     void Update()
     {
         Movement();
@@ -67,6 +70,7 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         enemyTargeter = GetComponent<EnemyTargeter>();
         animator = GetComponent<Animator>();
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
     }
 
     //handles character movement
@@ -82,14 +86,21 @@ public class ThirdPersonMovement : MonoBehaviour
             velocity.y = -2f;
         }
 
-         hor = Input.GetAxisRaw("Horizontal");
-         ver = Input.GetAxisRaw("Vertical");
+        if (gameManager.canMove)
+        {
+            hor = Input.GetAxisRaw("Horizontal");
+            ver = Input.GetAxisRaw("Vertical");
+        }
+        else
+            movMag = 0;
 
-        float movMag = new Vector3(hor, 0f, ver).sqrMagnitude;
+         
+
+        movMag = new Vector3(hor, 0f, ver).sqrMagnitude;
 
         animator.SetFloat("NormalSpeed", movMag);
 
-         dir = new Vector3(hor, 0f, ver).normalized;
+        dir = new Vector3(hor, 0f, ver).normalized;
 
 
         if (dir.magnitude >= 0.1f)
