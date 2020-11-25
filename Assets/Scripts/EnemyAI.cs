@@ -72,6 +72,10 @@ public class EnemyAI : MonoBehaviour
         this.fixedDeltaTime = Time.fixedDeltaTime;
     }
 
+    
+
+
+
     void Start()
     {
         //ref to game manager
@@ -83,6 +87,11 @@ public class EnemyAI : MonoBehaviour
         thirdPersonMovement = GameObject.Find("Player").GetComponent<ThirdPersonMovement>();
 
         engageDist = Vector3.Distance(Player.position, transform.position);
+
+        enemyAnimator.Rebind();
+        //enemyAnimator.enable = true;
+        //enemyAnimator.Play("Enemy_Idle", 0, 0f);
+
 
     }
 
@@ -232,7 +241,9 @@ public class EnemyAI : MonoBehaviour
             {
                 player.GetComponent<PlayerHealth>().TakeDamage(attackPower);
 
-                enemyAnimator.SetTrigger("Attack");
+                //enemyAnimator.SetTrigger("Attack");
+                enemyAnimator.Play("Enemy_Attack1");
+
 
                 //Debug.Log("Attack Player");
 
