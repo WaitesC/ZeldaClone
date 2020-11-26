@@ -85,6 +85,7 @@ public class EnemyWaveSpawner : MonoBehaviour
         //GameObject[] enemiesLeft = GameObject.FindGameObjectsWithTag("Enemy");
 
         if (enemiesLeft.Length == 1 && canCheckForEnemies == true)
+        //if (enemiesLeft.Length == 1)
         {
             waveNum += 1;
             StartCoroutine(SpawnEnemies());
