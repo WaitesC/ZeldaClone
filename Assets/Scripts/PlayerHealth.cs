@@ -1,12 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
     UnitStats playerStats;
     EnemyHealthBar playerHealthBar;
 
+    public GameObject gameOverScreen;
+
+    bool deadMeat;
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +31,21 @@ public class PlayerHealth : MonoBehaviour
     void Update()
     {
         //function to test if damage works correctly
-        DamageTester();
+        //DamageTester();
+
+        if(playerStats.currentHealth <0)
+        {
+            deadMeat = true;
+            gameOverScreen.SetActive(true);
+            Time.timeScale = 0;
+        }
+
+        if(deadMeat && Input.GetButtonDown("Jump"))
+        {
+            //reload scene;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            Time.timeScale = 1;
+        }
     }
 
     public void TakeDamage(int damage)
@@ -36,6 +54,8 @@ public class PlayerHealth : MonoBehaviour
 
         playerHealthBar.SetCurrentHealth(playerStats.currentHealth);
     }
+
+    
 
     void DamageTester()
     {

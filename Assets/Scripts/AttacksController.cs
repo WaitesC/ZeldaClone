@@ -7,6 +7,8 @@ public class AttacksController : MonoBehaviour
     //players animator
     public Animator playerAnimator;
 
+    public GameObject attackParticle;
+
     //attack range and position
     public Transform attackPoint;
     public float attackRange = 0.5f;
@@ -27,11 +29,15 @@ public class AttacksController : MonoBehaviour
 
     GameManager gameManager;
     ThirdPersonMovement thirdPersonMovement;
+    EnemyTargeter enemyTargeter;
+
+    //public float speed = 1.0f;
 
     void Start()
     {
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         thirdPersonMovement = GameObject.Find("Player").GetComponent<ThirdPersonMovement>();
+        enemyTargeter = GetComponent<EnemyTargeter>();
         
     }
 
@@ -90,6 +96,8 @@ public class AttacksController : MonoBehaviour
         //play attack anim
         playerAnimator.SetTrigger("Attack");
 
+        FaceTarget();
+
         StartCoroutine(AttackDamage());
     }
 
@@ -105,6 +113,8 @@ public class AttacksController : MonoBehaviour
             enemy.GetComponent<UnitStats>().TakeDamage(attackPower);
 
             enemy.GetComponent<EnemyAI>().enemyAnimator.SetTrigger("Hurt");
+
+            Instantiate(attackParticle, enemy.transform.position, Quaternion.identity);
         }
 
     }
@@ -116,6 +126,7 @@ public class AttacksController : MonoBehaviour
         //play attack anim
         playerAnimator.SetTrigger("Attack2");
 
+        FaceTarget();
 
         StartCoroutine(Attack2Damage());
     }
@@ -136,5 +147,17 @@ public class AttacksController : MonoBehaviour
 
     }
 
-    
+    void FaceTarget()
+    {
+        //float step = speed * Time.deltaTime; // calculate distance to move
+
+        if (Vector3.Distance(enemyTargeter.FindClosestEnemy().transform.position, transform.position) <= attackRange)
+        {
+            transform.LookAt(enemyTargeter.FindClosestEnemy().transform);
+
+            //transform.position = Vector3.MoveTowards(transform.position, enemyTargeter.FindClosestEnemy().transform.position, step);
+        }
+
+    }
+
 }

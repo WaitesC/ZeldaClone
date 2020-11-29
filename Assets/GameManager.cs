@@ -8,6 +8,10 @@ public class GameManager : MonoBehaviour
 {
     Animator playerAnimator;
 
+    EnemyTargeter enemyTargeter;
+
+    GameObject player;
+
     public bool playerRetaliate;
 
     public bool moveTowardsEnemy;
@@ -18,7 +22,12 @@ public class GameManager : MonoBehaviour
 
     public bool canMove;
 
+    bool playerNearEnemy;
+
     Image slowMotionVisual;
+    public float speed = 1.0f;
+
+    float step; 
 
     void Awake()
     {
@@ -29,7 +38,13 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        step = speed * Time.deltaTime; // calculate distance to move
+        enemyTargeter = GameObject.Find("Player").GetComponent<EnemyTargeter>();
+
+        playerNearEnemy = false;
+
         playerAnimator = GameObject.Find("Player").GetComponent<Animator>();
+        player = GameObject.Find("Player");
 
         playerRetaliate = false;
         slowMotionVisual = GameObject.Find("Slow Motion Visual").GetComponent<Image>();
@@ -48,8 +63,27 @@ public class GameManager : MonoBehaviour
         {
             playerAnimator.SetFloat("AttackAnimSpeedMulti", attackAnimSpeedMulti);
             slowMotionVisual.enabled = false;
+            moveTowardsEnemy = false;
 
         }
+        
+        if (Time.timeScale == 0.1f)
+        {
+            if (Input.GetButtonDown("Attack"))
+            {
+                moveTowardsEnemy = true;
+
+            }
+        }
+
+        if (moveTowardsEnemy)
+        {
+            player.transform.position = Vector3.MoveTowards(player.transform.position, enemyTargeter.FindClosestEnemy().transform.position, step);
+            if(enemyTargeter.DistancePlayerEnemy() <= 1)
+                moveTowardsEnemy = false;
+
+        }
+
 
     }
 
@@ -78,6 +112,8 @@ public class GameManager : MonoBehaviour
 
     void SlowDownStart()
     {
+        
+
         slowMotionVisual.enabled = true;
         playerRetaliate = true;
         //speed at which the game runs during slow mo

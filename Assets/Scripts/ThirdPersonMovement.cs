@@ -57,6 +57,9 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         Movement();
 
+
+        //if(!enemyTargeter.lockedOnToEnemy)
+        //    dir = new Vector3(hor, 0f, ver).normalized;
     }
 
     void Awake()
@@ -189,7 +192,7 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             animator.SetTrigger("Dodge");
             //dodge direction based off player direction when lcoked on
-            if (enemyTargeter.lockedOnToEnemy == true)
+            if (enemyTargeter.lockedOnToEnemy)
             {
 
                 velocity += Vector3.Scale(dir, DashDistance * new Vector3((Mathf.Log(1f / (Time.deltaTime * Drag.x + 1)) / -Time.deltaTime), 0, (Mathf.Log(1f / (Time.deltaTime * Drag.z + 1)) / -Time.deltaTime)));

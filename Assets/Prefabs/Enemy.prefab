@@ -265,6 +265,7 @@ MonoBehaviour:
   attackPoint: {fileID: 2620526119969439943}
   attackRange: 2
   attackPower: 5
+  attackDelay: 0.5
   groundCheck: {fileID: 8485598872803904924}
   groundDistance: 0.1
   groundMask:

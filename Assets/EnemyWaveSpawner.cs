@@ -6,9 +6,11 @@ using UnityEngine.UI;
 public class EnemyWaveSpawner : MonoBehaviour
 {
     public GameObject[] enemies;
+    public GameObject[] enemies2;
 
     public int waveNum;
-    
+
+    public float x, y, z;
 
     Text WaveNumberText;
     Text WaveNumberTextSmall;
@@ -70,12 +72,21 @@ public class EnemyWaveSpawner : MonoBehaviour
 
 
         GameObject enemy = enemies[Random.Range(0, enemies.Length)];
-        Vector3[] spawnPositions = new[] { new Vector3(-15, 11, 13), new Vector3(-15, 11, 10), new Vector3(-13, 11, 10) };
+        Vector3[] spawnPositions = new[] { new Vector3(x, y, z), new Vector3(x + 1, y, z) };
 
         Quaternion spawnRotation = Quaternion.identity;
-        for (int i = 1; i < 3; i++)
+        for (int i = 1; i < 2; i++)
         {
             Instantiate(enemy, spawnPositions[i], spawnRotation);
+        }
+        
+        GameObject enemy2 = enemies2[Random.Range(0, enemies2.Length)];
+        Vector3[] spawnPositions2 = new[] { new Vector3(x, y, z + 1), new Vector3(x + 1, y, z + 1) };
+
+        Quaternion spawnRotation2 = Quaternion.identity;
+        for (int i = 1; i < 2; i++)
+        {
+            Instantiate(enemy2, spawnPositions2[i], spawnRotation2);
         }
 
     }

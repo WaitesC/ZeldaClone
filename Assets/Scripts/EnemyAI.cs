@@ -14,6 +14,7 @@ public class EnemyAI : MonoBehaviour
     public float engageDist;
     float currentDist;
     ThirdPersonMovement thirdPersonMovement;
+    PlayerHealth playerHealth;
 
     //speed of enemy movement
     public float MoveSpeed = 4;
@@ -49,6 +50,7 @@ public class EnemyAI : MonoBehaviour
     public Transform attackPoint;
     public float attackRange = 0.5f;
     public int attackPower;
+    public float attackDelay;
 
     //dodge stuff
     bool dodgeable;
@@ -78,6 +80,7 @@ public class EnemyAI : MonoBehaviour
 
     void Start()
     {
+        playerHealth = GameObject.Find("Player").GetComponent<PlayerHealth>();
         //ref to game manager
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         //setting relevant components
@@ -235,27 +238,45 @@ public class EnemyAI : MonoBehaviour
 
             cancelBools();
 
-            Collider[] hitPlayers = Physics.OverlapSphere(attackPoint.position, attackRange, playerLayers);
+            enemyAnimator.Play("Enemy_Attack1");
 
-            foreach(Collider player in hitPlayers)
-            {
-                player.GetComponent<PlayerHealth>().TakeDamage(attackPower);
+            dodgeable = true;
 
-                //enemyAnimator.SetTrigger("Attack");
-                enemyAnimator.Play("Enemy_Attack1");
+            Debug.Log("Now Dodgeable");
+
+            Invoke("CounterWindow", 1f);
 
 
-                //Debug.Log("Attack Player");
+            StartCoroutine(AttackDamage());
 
-                dodgeable = true;
 
-                Debug.Log("Now Dodgeable");
-
-                Invoke("CounterWindow", 1f);
-            }
+            
 
             attackTime = Time.time + 1f / nextAttackTime;
         }
+    }
+
+    IEnumerator AttackDamage()
+    {
+        yield return new WaitForSeconds(attackDelay);
+
+        Collider[] hitPlayers = Physics.OverlapSphere(attackPoint.position, attackRange, playerLayers);
+
+        foreach (Collider player in hitPlayers)
+        {
+            //enemyAnimator.SetTrigger("Attack");
+
+            //player.GetComponent<PlayerHealth>(attackPower);
+
+            playerHealth.TakeDamage(attackPower);
+            //Debug.Log("Attack Player");
+
+            
+
+        }
+
+
+
     }
 
     private void CounterWindow()
