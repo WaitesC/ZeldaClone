@@ -27,6 +27,14 @@ public class GameManager : MonoBehaviour
     Image slowMotionVisual;
     public float speed = 1.0f;
 
+    public bool paused;
+
+    public bool tutorialTime;
+
+    public bool deadMeat;
+
+    public bool dodging;
+
     float step; 
 
     void Awake()
@@ -38,6 +46,10 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        deadMeat = false;
+        tutorialTime = true;
+        paused = false;
+        canMove = true;
         step = speed * Time.deltaTime; // calculate distance to move
         enemyTargeter = GameObject.Find("Player").GetComponent<EnemyTargeter>();
 
@@ -57,7 +69,19 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (tutorialTime)
+        {
+            Time.timeScale = 0.0f;
+            if (Input.GetButtonDown("Jump"))
+            {
+                tutorialTime = false;
+            }
+        }
+        else if(canMove && !deadMeat && !dodging)
+        {
+            Time.timeScale = 1.0f;
+
+        }
 
         if (Time.timeScale == 1.0f)
         {
@@ -67,7 +91,7 @@ public class GameManager : MonoBehaviour
 
         }
         
-        if (Time.timeScale == 0.1f)
+        if (dodging)
         {
             if (Input.GetButtonDown("Attack"))
             {
@@ -108,11 +132,13 @@ public class GameManager : MonoBehaviour
         slowMotionVisual.enabled = false;
 
         playerRetaliate = false;
+        //SlowDownEnd();
     }
 
     void SlowDownStart()
     {
-        
+        dodging = true;
+        playerAnimator.SetFloat("AttackAnimSpeedMulti", 30.0f);
 
         slowMotionVisual.enabled = true;
         playerRetaliate = true;
@@ -122,11 +148,12 @@ public class GameManager : MonoBehaviour
         //how long until the speed is reset
         Invoke("ResetTime", 0.2f);
 
-        playerAnimator.SetFloat("AttackAnimSpeedMulti", 30.0f);
     }
 
     void SlowDownEnd()
     {
+        dodging = false;
+
         playerAnimator.SetFloat("AttackAnimSpeedMulti", 2.5f);
 
         Time.timeScale = 1.0f;

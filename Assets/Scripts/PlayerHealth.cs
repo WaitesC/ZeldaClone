@@ -12,11 +12,17 @@ public class PlayerHealth : MonoBehaviour
 
     bool deadMeat;
 
+    GameManager gameManager;
+    ThirdPersonMovement thirdPersonMovement;
+
+
     // Start is called before the first frame update
     void Start()
     {
         playerStats = GameObject.Find("Player").GetComponent<UnitStats>();
         playerHealthBar = GameObject.Find("Player Health Bar Fill").GetComponent<EnemyHealthBar>();
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+        thirdPersonMovement = GameObject.Find("Player").GetComponent<ThirdPersonMovement>();
 
 
         //sets value of current health
@@ -33,19 +39,28 @@ public class PlayerHealth : MonoBehaviour
         //function to test if damage works correctly
         //DamageTester();
 
-        if(playerStats.currentHealth <0)
-        {
-            deadMeat = true;
-            gameOverScreen.SetActive(true);
-            Time.timeScale = 0;
-        }
+        //if(playerStats.currentHealth <0)
+        //{
+        //    deadMeat = true;
+        //    gameOverScreen.SetActive(true);
+        //    Time.timeScale = 0.0f;
+        //    gameManager.canMove = false;
+        //    gameManager.paused = true;
+        //    gameManager.deadMeat = true;
+        //    //thirdPersonMovement.targetAngle = 0;
+        //    //thirdPersonMovement.targetAngle = 0;
+        //    //transform.rotation = Quaternion.identity;
 
-        if(deadMeat && Input.GetButtonDown("Jump"))
-        {
-            //reload scene;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            Time.timeScale = 1;
-        }
+
+        //}
+
+        //if (deadMeat && Input.GetButtonDown("Jump"))
+        //{
+        //    //reload scene;
+        //    //gameManager.paused = false;
+        //    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        //    Time.timeScale = 1;
+        //}
     }
 
     public void TakeDamage(int damage)

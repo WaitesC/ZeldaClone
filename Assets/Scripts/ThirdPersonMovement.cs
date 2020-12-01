@@ -49,7 +49,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
     //rotation angle for player movement/ lock on
     float angle;
-    float targetAngle;
+    public float targetAngle;
 
     GameManager gameManager;
 
@@ -94,8 +94,12 @@ public class ThirdPersonMovement : MonoBehaviour
             hor = Input.GetAxisRaw("Horizontal");
             ver = Input.GetAxisRaw("Vertical");
         }
-        else
-            movMag = 0;
+
+        if(!gameManager.canMove)
+        {
+            Debug.Log("sd");
+            targetAngle = 0;
+        }
 
          
 

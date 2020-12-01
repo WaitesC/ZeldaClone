@@ -27,6 +27,8 @@ public class AttacksController : MonoBehaviour
     public float attackDelay;
     public float attack2Delay;
 
+    float speed = 1.0f;
+
     GameManager gameManager;
     ThirdPersonMovement thirdPersonMovement;
     EnemyTargeter enemyTargeter;
@@ -87,7 +89,22 @@ public class AttacksController : MonoBehaviour
             }
         }
 
+        //if(gameManager.dodging)
+        //{
+        //    float step = speed * Time.deltaTime; // calculate distance to move
+        //    if (Input.GetButtonDown("Attack2"))
+        //    {
+        //        transform.position = Vector3.MoveTowards(transform.position, enemyTargeter.FindClosestEnemy().transform.position, step);
+        //        Attack2();
+        //    }
         
+        //    if (Input.GetButtonDown("Attack"))
+        //    {
+        //        transform.position = Vector3.MoveTowards(transform.position, enemyTargeter.FindClosestEnemy().transform.position, step);
+        //        Attack();
+        //    }
+
+        //}
     }
 
     //basic attack function
@@ -143,6 +160,9 @@ public class AttacksController : MonoBehaviour
             enemy.GetComponent<UnitStats>().TakeDamage(attackPower2);
 
             enemy.GetComponent<EnemyAI>().enemyAnimator.SetTrigger("Hurt");
+
+            Instantiate(attackParticle, enemy.transform.position, Quaternion.identity);
+
         }
 
     }

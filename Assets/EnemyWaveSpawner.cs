@@ -41,23 +41,24 @@ public class EnemyWaveSpawner : MonoBehaviour
 
     }
 
-    void NewWave()
-    {
-        WaveNumberText.color = see;
-        WaveNumberTextSmall.color = unSee;
+    //void NewWave()
+    //{
+    //    WaveNumberText.color = see;
+    //    WaveNumberTextSmall.color = unSee;
 
-        //SpawnEnemies();
+    //    //SpawnEnemies();
 
-        //Invoke("SpawnEnemies", 2.0f);
+    //    //Invoke("SpawnEnemies", 2.0f);
 
-        StartCoroutine(SpawnEnemies());
+    //    StartCoroutine(SpawnEnemies());
 
-    }
+    //}
 
 
     IEnumerator SpawnEnemies()
     {
         canCheckForEnemies = false;
+        yield return new WaitForSeconds(0.1f);
 
         WaveNumberText.color = see;
         WaveNumberTextSmall.color = unSee;
