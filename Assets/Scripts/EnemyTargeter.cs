@@ -26,6 +26,9 @@ public class EnemyTargeter : MonoBehaviour
 
     EnemyHealthBar enemyHealthBar;
 
+    public float camSpeed;
+
+
     //enemy stats
     float enemyMaxHealth;
 
@@ -133,10 +136,13 @@ public class EnemyTargeter : MonoBehaviour
         }
 
         //stuff that happens when player is locked on to enemy
+        //fix camera bs
         if (lockedOnToEnemy)
         {
             animator.SetBool("LockedOn", true);
-            cameraTarget.gameObject.transform.position = FindClosestEnemy().gameObject.transform.position;
+
+            //cameraTarget.gameObject.transform.position = FindClosestEnemy().gameObject.transform.position;
+            cameraTarget.gameObject.transform.position = Vector3.Lerp(transform.position, FindClosestEnemy().gameObject.transform.position, camSpeed * Time.deltaTime);
 
             enemyDirection = (transform.position - FindClosestEnemy().gameObject.transform.position).normalized;
 

@@ -9,6 +9,17 @@ public class AttacksController : MonoBehaviour
 
     public GameObject attackParticle;
 
+
+    //sounds and shit
+    public float soundVolume;
+    public AudioClip attackSound;
+    public AudioClip attack2Sound;
+    public AudioClip playerHurtSound;
+    public AudioClip enemyHurtSound;
+    public AudioClip jumpSound;
+
+    AudioSource audioSource;
+
     //attack range and position
     public Transform attackPoint;
     public float attackRange = 0.5f;
@@ -40,6 +51,8 @@ public class AttacksController : MonoBehaviour
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         thirdPersonMovement = GameObject.Find("Player").GetComponent<ThirdPersonMovement>();
         enemyTargeter = GetComponent<EnemyTargeter>();
+
+        audioSource = GetComponent<AudioSource>();
         
     }
 
@@ -113,6 +126,8 @@ public class AttacksController : MonoBehaviour
         //play attack anim
         playerAnimator.SetTrigger("Attack");
 
+
+
         FaceTarget();
 
         StartCoroutine(AttackDamage());
@@ -124,10 +139,15 @@ public class AttacksController : MonoBehaviour
         //detect enemies in range
         Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayers);
 
+        audioSource.PlayOneShot(attackSound, soundVolume);
+
         //damage enemies
         foreach (Collider enemy in hitEnemies)
         {
+
             enemy.GetComponent<UnitStats>().TakeDamage(attackPower);
+
+            enemy.GetComponent<AudioSource>().PlayOneShot(enemyHurtSound, soundVolume);
 
             enemy.GetComponent<EnemyAI>().enemyAnimator.SetTrigger("Hurt");
 
@@ -154,9 +174,13 @@ public class AttacksController : MonoBehaviour
         //detect enemies in range
         Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayers);
 
+        audioSource.PlayOneShot(attackSound, soundVolume);
+
         //damage enemies
         foreach (Collider enemy in hitEnemies)
         {
+            enemy.GetComponent<AudioSource>().PlayOneShot(enemyHurtSound, soundVolume);
+
             enemy.GetComponent<UnitStats>().TakeDamage(attackPower2);
 
             enemy.GetComponent<EnemyAI>().enemyAnimator.SetTrigger("Hurt");

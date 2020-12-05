@@ -37,30 +37,30 @@ public class PlayerHealth : MonoBehaviour
     void Update()
     {
         //function to test if damage works correctly
-        //DamageTester();
+        DamageTester();
 
-        //if(playerStats.currentHealth <0)
-        //{
-        //    deadMeat = true;
-        //    gameOverScreen.SetActive(true);
-        //    Time.timeScale = 0.0f;
-        //    gameManager.canMove = false;
-        //    gameManager.paused = true;
-        //    gameManager.deadMeat = true;
-        //    //thirdPersonMovement.targetAngle = 0;
-        //    //thirdPersonMovement.targetAngle = 0;
-        //    //transform.rotation = Quaternion.identity;
+        if (playerStats.currentHealth < 0)
+        {
+            deadMeat = true;
+            gameOverScreen.SetActive(true);
+            Time.timeScale = 0.0f;
+            gameManager.canMove = false;
+            gameManager.paused = true;
+            gameManager.deadMeat = true;
+            //thirdPersonMovement.targetAngle = 0;
+            //thirdPersonMovement.targetAngle = 0;
+            //transform.rotation = Quaternion.identity;
 
 
-        //}
+        }
 
-        //if (deadMeat && Input.GetButtonDown("Jump"))
-        //{
-        //    //reload scene;
-        //    //gameManager.paused = false;
-        //    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        //    Time.timeScale = 1;
-        //}
+        if (deadMeat && Input.GetButtonDown("Jump"))
+        {
+            //reload scene;
+            //gameManager.paused = false;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            Time.timeScale = 1;
+        }
     }
 
     public void TakeDamage(int damage)
@@ -74,9 +74,9 @@ public class PlayerHealth : MonoBehaviour
 
     void DamageTester()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            TakeDamage(20);
+            TakeDamage(200);
         }
     }
 }
