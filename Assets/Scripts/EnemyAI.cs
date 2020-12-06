@@ -15,6 +15,11 @@ public class EnemyAI : MonoBehaviour
     float currentDist;
     ThirdPersonMovement thirdPersonMovement;
     PlayerHealth playerHealth;
+    public AudioClip playerHurtSound;
+
+    public GameObject attackParticle;
+
+
 
     //speed of enemy movement
     public float MoveSpeed = 4;
@@ -266,7 +271,9 @@ public class EnemyAI : MonoBehaviour
         {
             //enemyAnimator.SetTrigger("Attack");
 
-            //player.GetComponent<PlayerHealth>(attackPower);
+            player.GetComponent<Animator>().Play("Hurt");
+            player.GetComponent<AudioSource>().PlayOneShot(playerHurtSound, 0.3f);
+            Instantiate(attackParticle, player.transform.position, Quaternion.identity);
 
             playerHealth.TakeDamage(attackPower);
             //Debug.Log("Attack Player");

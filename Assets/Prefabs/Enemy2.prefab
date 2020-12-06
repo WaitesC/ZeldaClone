@@ -223,6 +223,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   engageDist: 0
+  playerHurtSound: {fileID: 8300000, guid: ed1f9c346cdc5914da782b7222e61828, type: 3}
+  attackParticle: {fileID: 7478379533406286131, guid: d98b892573b5dbc48b55d28ca3a4110b,
+    type: 3}
   MoveSpeed: 4
   MaxDist: 10
   MinDist: 2

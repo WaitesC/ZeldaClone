@@ -9,6 +9,7 @@ public class PlayerHealth : MonoBehaviour
     EnemyHealthBar playerHealthBar;
 
     public GameObject gameOverScreen;
+    public GameObject winScreen;
 
     bool deadMeat;
 
@@ -61,6 +62,16 @@ public class PlayerHealth : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             Time.timeScale = 1;
         }
+    }
+
+    public void Win()
+    {
+        deadMeat = true;
+        winScreen.SetActive(true);
+        Time.timeScale = 0.0f;
+        gameManager.canMove = false;
+        gameManager.paused = true;
+        gameManager.deadMeat = true;
     }
 
     public void TakeDamage(int damage)

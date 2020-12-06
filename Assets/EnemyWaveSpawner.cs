@@ -8,6 +8,8 @@ public class EnemyWaveSpawner : MonoBehaviour
     public GameObject[] enemies;
     public GameObject[] enemies2;
 
+    PlayerHealth playerHealth;
+
     public int waveNum;
 
     public float x, y, z;
@@ -31,6 +33,7 @@ public class EnemyWaveSpawner : MonoBehaviour
 
         waveNum = 1;
 
+        playerHealth = GameObject.Find("Player").GetComponent<PlayerHealth>();
         WaveNumberText = GameObject.Find("WaveNumberText").GetComponent<Text>();
         WaveNumberTextSmall = GameObject.Find("WaveNumberTextSmall").GetComponent<Text>();
         //WaveNumberTextObject = GameObject.Find("WaveNumberText");
@@ -71,25 +74,32 @@ public class EnemyWaveSpawner : MonoBehaviour
         WaveNumberText.color = unSee;
         WaveNumberTextSmall.color = see;
 
+        SpawnEnemy1();
+        SpawnEnemy2();
+    }
 
+    void SpawnEnemy1()
+    {
         GameObject enemy = enemies[Random.Range(0, enemies.Length)];
-        Vector3[] spawnPositions = new[] { new Vector3(x, y, z), new Vector3(x + 1, y, z) };
+        Vector3[] spawnPositions = new[] { new Vector3(x, y, z), new Vector3(x + 1, y, z), new Vector3(x + 2, y, z), new Vector3(x + 3, y, z) };
 
         Quaternion spawnRotation = Quaternion.identity;
-        for (int i = 1; i < 2; i++)
+        for (int i = 1; i < 1 + waveNum; i++) 
         {
             Instantiate(enemy, spawnPositions[i], spawnRotation);
         }
-        
+    }
+
+    void SpawnEnemy2()
+    {
         GameObject enemy2 = enemies2[Random.Range(0, enemies2.Length)];
-        Vector3[] spawnPositions2 = new[] { new Vector3(x, y, z + 1), new Vector3(x + 1, y, z + 1) };
+        Vector3[] spawnPositions2 = new[] { new Vector3(x, y, z + 1), new Vector3(x + 1, y, z + 1), new Vector3(x + 1, y, z + 2), new Vector3(x + 1, y, z + 3) };
 
         Quaternion spawnRotation2 = Quaternion.identity;
-        for (int i = 1; i < 2; i++)
-        {
+        for (int i = 1; i < 1 + waveNum; i++) 
+        { 
             Instantiate(enemy2, spawnPositions2[i], spawnRotation2);
         }
-
     }
 
     void CheckForEnemies()
@@ -99,8 +109,14 @@ public class EnemyWaveSpawner : MonoBehaviour
         if (enemiesLeft.Length == 1 && canCheckForEnemies == true)
         //if (enemiesLeft.Length == 1)
         {
-            waveNum += 1;
-            StartCoroutine(SpawnEnemies());
+            if (waveNum <= 4)
+            {
+                waveNum += 1;
+                StartCoroutine(SpawnEnemies());
+
+            }
+            if (waveNum == 5)
+                playerHealth.Win();
             //NewWave();
 
         }

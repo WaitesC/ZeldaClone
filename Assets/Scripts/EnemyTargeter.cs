@@ -7,9 +7,11 @@ public class EnemyTargeter : MonoBehaviour
     GameObject closestEnemy;
     float closestEnemyDistance;
 
+    public GameObject arrow;
+
     public float lockOnDistance = 10;
     public bool lockedOnToEnemy;
-
+    bool madeArrow;
     public static Vector3 enemyDirection;
 
     Animator animator;
@@ -139,6 +141,8 @@ public class EnemyTargeter : MonoBehaviour
         //fix camera bs
         if (lockedOnToEnemy)
         {
+            
+
             animator.SetBool("LockedOn", true);
 
             //cameraTarget.gameObject.transform.position = FindClosestEnemy().gameObject.transform.position;
@@ -151,6 +155,12 @@ public class EnemyTargeter : MonoBehaviour
             float rightMag = (thirdPersonMovement.dir - right).sqrMagnitude;
 
             animator.SetFloat("LockedOnMovement", rightMag);
+
+
+            //if(!madeArrow)
+            //    Instantiate(arrow, FindClosestEnemy().gameObject.transform.position, Quaternion.identity);
+
+            //madeArrow = true;
 
 
             //if (rightMag < 1)
